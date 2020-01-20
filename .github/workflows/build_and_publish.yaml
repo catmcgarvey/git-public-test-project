@@ -20,9 +20,9 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ steps.nvm.outputs.nvm_node_version }}
-        registry-url: 'https://npm.pkg.github.com'
+        registry-url: https://npm.pkg.github.com/
         scope: 'catmcgarvey'
-
+        
     - name: npm install, lint, build, and test
       run: |
         npm ci
