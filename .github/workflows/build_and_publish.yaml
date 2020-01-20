@@ -1,0 +1,48 @@
+name: Node CI
+
+on: [push]
+
+jobs:
+  build:
+
+    name: Build, lint, test & publish
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Read .nvmrc
+      run: echo ::set-output name=nvm_node_version::$(cat .nvmrc)
+      id: nvm
+
+    - name: Use Node.js ${{ steps.nvm.outputs.nvm_node_version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ steps.nvm.outputs.nvm_node_version }}
+        registry-url: 'https://npm.pkg.github.com'
+        scope: '@fpr-public'
+
+    - name: npm install, lint, build, and test
+      run: |
+        npm ci
+        npm run lint --if-present
+        npm run build --if-present
+        npm test --if-present
+      env:
+        CI: true
+
+    - name: npm publish
+      run: npm publish
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  upload:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - uses: bacongobbler/azure-blob-storage-upload@v1.0.0
+        with:
+          source_dir: _dist
+          container_name: www
+          connection_string: ${{ secrets.ConnectionString }}
+          extra_args: '--pattern *.tar.gz*'
