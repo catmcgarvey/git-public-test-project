@@ -21,7 +21,7 @@ jobs:
       with:
         node-version: ${{ steps.nvm.outputs.nvm_node_version }}
         registry-url: 'https://npm.pkg.github.com'
-        scope: '@fpr-public'
+        scope: '@catmcgarvey'
 
     - name: npm install, lint, build, and test
       run: |
