@@ -44,5 +44,5 @@ jobs:
         with:
           source_dir: dist
           container_name: festorecatcontainer
-          connection_string: ${{ secrets.ConnectionString }}
+          connection_string: ${{ secrets.azure_connection_string }}
           extra_args: '--pattern *.tar.gz*'
