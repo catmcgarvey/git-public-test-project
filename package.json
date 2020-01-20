@@ -10,9 +10,6 @@
     "type": "git",
     "url": "git://github.com/catcgarvey/git-public-test-project.git"
   },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
-  },
   "author": "",
   "license": "UNLICENSED"
 }
